@@ -1,0 +1,24 @@
+{
+  "name": "faeterj_crud_produtos",
+  "version": "1.0.0",
+  "description": "CRUD de produtos de supermercado criado  em sala de aula, na disciplina de Algoritmos 2 na FAETERJ Barra Mansa",
+  "homepage": "https://github.com/leonardo-figueira/faeterj_crud_produtos#readme",
+  "bugs": {
+    "url": "https://github.com/leonardo-figueira/faeterj_crud_produtos/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonardo-figueira/faeterj_crud_produtos.git"
+  },
+  "license": "ISC",
+  "author": "Leonardo Vicente Figueira",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1"
+  }
+}

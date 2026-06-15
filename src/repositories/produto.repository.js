@@ -23,39 +23,107 @@ function findAllProdutoRepository() {
             }
         );
     });
-} 
+}
 
-function createProdutoRepository(novoProduto) {
-    const {
-        nome, 
-        valor,
-        tipo
-    } = novoProduto;
-
+function findProdutoByIdRepository(id) {
     return new Promise((resolve, reject) => {
-        db.run(
-            `INSERT INTO produto(nome, valor, tipo)
-                VALUES (?,?,?)`,
-                [nome, valor, tipo],
-                (error) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        resolve({
-                            id: this.lastID
-                        });
-                    }
+        db.get(
+            `SELECT
+                *
+            FROM produto
+            WHERE id = ?`,
+            [id],
+            (error, row) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(row);
+                }
             }
         );
     });
 }
+
+function createProdutoRepository(novoProduto) {
+    return new Promise((resolve, reject) => {
         
-            
+        const {
+            nome,
+            valor,
+            tipo
+        } = novoProduto;
 
+        db.run(
+            `INSERT INTO produto(nome, valor, tipo)
+            VALUES (?,?,?)`,
+            [nome, valor, tipo],
+            (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve({
+                        id: this.lastID
+                    });
+                }
+            }
+        );
 
+    });
+}
 
+function updateProdutoRepository(id, produto) {
+    return new Promise((resolve, reject) => {
+        const {
+            nome,
+            valor,
+            tipo
+        } = produto;
+
+        db.run(
+            `UPDATE produto
+            SET nome = ?,
+                valor = ?,
+                tipo = ?
+            WHERE id = ?`,
+            [nome, valor, tipo, id],
+            (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve({
+                        id,
+                        ...produto
+                    });
+                }
+            }
+        )
+    });
+}
+
+function deleteProdutoRepository(id) {
+    return new Promise((resolve, reject) => {
+            db.run(
+                `DELETE FROW produto
+                WHERE id = ?`,
+                [id],
+                (error) => {
+                    if (error) {
+                        reject(error);
+                    } else { 
+                        resolve({
+                            message: "Produto excluído com sucesso."
+                        });
+                    }
+                }    
+            );
+        }
+    );
+}
 export default {
     findAllProdutoRepository,
-    createProdutoRepository
+    findProdutoByIdRepository,
+    createProdutoRepository,
+    updateProdutoRepository,
+    deleteProdutoRepository
 }
 
